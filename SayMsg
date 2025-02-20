@@ -1,6 +1,6 @@
 -- Made by dino
 local Library = {}
 
-function Library:SayMsg(msg)
-    game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(msg, "All")
+function Library.Say(args)
+    game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(args.Msg, "All")
 end
