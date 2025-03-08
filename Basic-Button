@@ -1,0 +1,56 @@
+-- Example At The Bottom
+local function AddButton(Button)
+    local gui = game.CoreGui:FindFirstChild("CustomGui") or Instance.new("ScreenGui")
+    gui.Name = "CustomGui"
+    gui.Parent = game.CoreGui
+
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(0, 100, 0, 40)
+    button.Position = UDim2.new(0, 100, 0, 80)
+    button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    button.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    button.BorderSizePixel = 1
+    button.Text = Button.Name
+    button.Name = Button.Name
+    button.BackgroundTransparency = 0
+    button.TextColor3 = Color3.new(255, 255, 255)
+    button.Font = Enum.Font.GothamBold
+    button.Parent = gui
+    button.Draggable = true
+    button.TextSize = 15
+
+    local UICorner = Instance.new("UICorner")
+    UICorner.CornerRadius = UDim.new(0, 10)
+    UICorner.Parent = button
+
+    if Button.Toggle then
+        Button.State = false
+        button.MouseButton1Click:Connect(function()
+            Button.State = not Button.State
+            if Button.ShowState then
+                button.Text = Button.ShowText and (Button.Name .. (Button.State and " On" or " Off")) or (Button.State and "On" or "Off")
+            end
+            if Button.CallBack then
+                Button.CallBack(Button.State)
+            end
+        end)
+    else
+        button.MouseButton1Click:Connect(function()
+            if Button.CallBack then
+                Button.CallBack()
+            end
+        end)
+    end
+
+    return button
+end
+
+AddButton({
+    Name = "Toggle",
+    Toggle = true, -- If you Want the Button to be a toggle button On this
+    ShowState = true, shows the on and off
+    ShowText = true, puts your text like this Toggle On/Off
+    CallBack = function(state)
+        print("Hi:", state)
+    end
+})
