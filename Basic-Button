@@ -1,4 +1,10 @@
 -- Example At The Bottom
+local Fonts = {
+    Pixel = Enum.Font.Arcade,
+    Bold = Enum.Font.GothamBold,
+    Classic = Enum.Font.Legacy
+}
+
 local function AddButton(Button)
     local gui = game.CoreGui:FindFirstChild("CustomGui") or Instance.new("ScreenGui")
     gui.Name = "CustomGui"
@@ -9,12 +15,12 @@ local function AddButton(Button)
     button.Position = UDim2.new(0, 100, 0, 80)
     button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     button.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    button.BorderSizePixel = 1
+    button.BorderSizePixel = 0
     button.Text = Button.Name
     button.Name = Button.Name
     button.BackgroundTransparency = 0
     button.TextColor3 = Color3.new(255, 255, 255)
-    button.Font = Enum.Font.GothamBold
+    button.Font = Fonts[Button.Font] or Enum.Font.Legacy
     button.Parent = gui
     button.Draggable = true
     button.TextSize = 15
@@ -47,10 +53,11 @@ end
 
 AddButton({
     Name = "Toggle",
-    Toggle = true, -- If you Want the Button to be a toggle button On this
-    ShowState = true, shows the on and off
-    ShowText = true, puts your text like this Toggle On/Off
+    Toggle = true,
+    ShowState = true,
+    ShowText = true,
+    Font = "Pixel",
     CallBack = function(state)
-        print("Hi:", state)
+        print("Toggle:", state)
     end
 })
