@@ -14,7 +14,7 @@ gui.Parent = game.CoreGui
 local so = Instance.new("TextButton")
 so.Size = UDim2.new(0, 70, 0, 28)
 so.Position = UDim2.new(0, 5, 0, 10)
-so.BackgroundColor3 = Library.Accent
+so.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 so.BorderColor3 = Color3.fromRGB(0, 0, 0)
 so.BorderSizePixel = 0
 so.Text = "Toggle ui"
@@ -64,15 +64,15 @@ function AddLine(Shh)
     Line.Parent = Shh.Parent
 end
 
-AddLine({70, 1, 0, 0, Color = Library.AccentColor, Parent = so}) -- Top
-AddLine({70, 1, 0, 28, Color = Library.AccentColor, Parent = so}) -- Bottom
-AddLine({1, 28, 0, 0, Color = Library.AccentColor, Parent = so}) -- Left
-AddLine({1, 28, 70, 0, Color = Library.AccentColor, Parent = so}) -- Left
+AddLine({70, 1, 0, 0, Color = Library.Accent, Parent = so}) -- Top
+AddLine({70, 1, 0, 28, Color = Library.Accent, Parent = so}) -- Bottom
+AddLine({1, 28, 0, 0, Color = Library.Accent, Parent = so}) -- Left
+AddLine({1, 28, 70, 0, Color = Library.Accent, Parent = so}) -- Left
 
 --[[ done yet Skidder
 
-AddLine({70, 1, 0, 0, Color = Library.AccentColor, Parent = ro}) -- Top
-AddLine({70, 1, 0, 28, Color = Library.AccentColor, Parent = ro}) -- Bottom
-AddLine({1, 28, 0, 0, Color = Library.AccentColor, Parent = ro}) -- Left
-AddLine({1, 28, 70, 0, Color = Library.AccentColor, Parent = ro}) -- Right
+AddLine({70, 1, 0, 0, Color = Library.Accent, Parent = ro}) -- Top
+AddLine({70, 1, 0, 28, Color = Library.Accent, Parent = ro}) -- Bottom
+AddLine({1, 28, 0, 0, Color = Library.Accent, Parent = ro}) -- Left
+AddLine({1, 28, 70, 0, Color = Library.Accent, Parent = ro}) -- Right
 ]]
