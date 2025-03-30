@@ -1,63 +1,92 @@
--- Example At The Bottom
-local Fonts = {
-    Pixel = Enum.Font.Arcade,
-    Bold = Enum.Font.GothamBold,
-    Classic = Enum.Font.Legacy
-}
+local howmany = 0
+local MakeButton = LPH_NO_VIRTUALIZE(function(ButtonName, Color, callback)
+    howmany = howmany + 1
 
-local function AddButton(Button)
-    local gui = game.CoreGui:FindFirstChild("CustomGui") or Instance.new("ScreenGui")
-    gui.Name = "CustomGui"
-    gui.Parent = game.CoreGui
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Parent = game:GetService("CoreGui")
+    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-    local button = Instance.new("TextButton")
-    button.Size = UDim2.new(0, 100, 0, 40)
-    button.Position = UDim2.new(0, 100, 0, 80)
-    button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    button.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    button.BorderSizePixel = 0
-    button.Text = Button.Name
-    button.Name = Button.Name
-    button.BackgroundTransparency = 0
-    button.TextColor3 = Color3.new(255, 255, 255)
-    button.Font = Fonts[Button.Font] or Enum.Font.Legacy
-    button.Parent = gui
-    button.Draggable = true
-    button.TextSize = 15
+    local Frame = Instance.new("Frame")
+    local TextButton = Instance.new("ImageLabel")
+    local TextLabel = Instance.new("TextButton")
+    local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
 
-    local UICorner = Instance.new("UICorner")
-    UICorner.CornerRadius = UDim.new(0, 10)
-    UICorner.Parent = button
+    Frame.Parent = ScreenGui
+    Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Frame.BackgroundTransparency = 0.3
+    Frame.Position = UDim2.new(1, -150, 0, (howmany - 1) * 60)
+    Frame.Size = UDim2.new(0, 120, 0, 40)
 
-    if Button.Toggle then
-        Button.State = false
-        button.MouseButton1Click:Connect(function()
-            Button.State = not Button.State
-            if Button.ShowState then
-                button.Text = Button.ShowText and (Button.Name .. (Button.State and " On" or " Off")) or (Button.State and "On" or "Off")
+    local uiStroke = Instance.new("UIStroke")
+    uiStroke.Parent = Frame
+    uiStroke.Color = Color
+    uiStroke.Thickness = 1.2
+    uiStroke.Transparency = 0
+
+    TextButton.Parent = Frame
+    TextButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    TextButton.BackgroundTransparency = 1
+    TextButton.Size = UDim2.new(0, 28, 0, 28)
+    TextButton.AnchorPoint = Vector2.new(0, 0.5)
+    TextButton.Position = UDim2.new(0.05, 0, 0.5, 0)
+    TextButton.Image = "rbxassetid://10734923214"
+    TextButton.ImageColor3 = Color
+
+    TextLabel.Parent = Frame
+    TextLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.Size = UDim2.new(0, 80, 0, 28)
+    TextLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+    TextLabel.Position = UDim2.new(0.65, 0, 0.5, 0)
+    TextLabel.Font = Enum.Font.Arimo
+    TextLabel.Text = ButtonName
+    TextLabel.TextColor3 = Color
+    TextLabel.TextScaled = true
+    TextLabel.TextSize = 25
+    TextLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    TextLabel.TextStrokeTransparency = 1
+
+    local uiCorner = Instance.new("UICorner", Frame)
+    uiCorner.CornerRadius = UDim.new(0, 8)
+
+    local buttonState = false
+
+    TextLabel.MouseButton1Down:Connect(function()
+        buttonState = not buttonState
+        callback(buttonState)
+
+        if buttonState then
+            TextButton.Image = "rbxassetid://10735024209"
+        else
+            TextButton.Image = "rbxassetid://10734923214"
+        end
+    end)
+
+    local dragStart, startPos
+    TextLabel.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragStart = input.Position
+            startPos = Frame.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragStart = nil
+                end
+            end)
+        end
+    end)
+
+    TextLabel.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            if dragStart then
+                local delta = input.Position - dragStart
+                Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
             end
-            if Button.CallBack then
-                Button.CallBack(Button.State)
-            end
-        end)
-    else
-        button.MouseButton1Click:Connect(function()
-            if Button.CallBack then
-                Button.CallBack()
-            end
-        end)
-    end
+        end
+    end)
 
-    return button
-end
+    UITextSizeConstraint.Parent = TextLabel
+    UITextSizeConstraint.MaxTextSize = 25
+end)
 
-AddButton({
-    Name = "Toggle",
-    Toggle = true,
-    ShowState = true,
-    ShowText = true,
-    Font = "Pixel",
-    CallBack = function(state)
-        print("Toggle:", state)
-    end
-})
+
+MakeButton("hi", Color3.fromRGB(255, 255, 255), function(a)
