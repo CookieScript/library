@@ -25,6 +25,8 @@ so.TextColor3 = Color3.new(255, 255, 255)
 so.Font = Enum.Font.Code
 so.Parent = gui
 
+local Skidded = false
+
 so.MouseButton1Click:Connect(function()
     Skidded = not Skidded
     Library:SetOpen(Skidded)
