@@ -1,0 +1,118 @@
+local repo = 'https://raw.githubusercontent.com/CookieScript/Mobile/refs/heads/main/'
+
+local Library = loadstring(game:HttpGet(repo .. "SkiddedExampleUi"))()
+
+Library:ChangeAccent(Color3.fromRGB(255, 255, 255));
+
+local Window = Library:Window({Name = 'Example Ui', Amount = 4});
+
+Library:Notification('Loaded Example Ui', 5);
+
+
+local Tab1 = Window:Page({Name = 'Main'});
+local Tab2 = Window:Page({Name = 'Misc'});
+local Tab3 = Window:Page({Name = 'PlayerList'});
+local Tab4 = Window:Page({Name = 'Config'});
+
+local Section = Tab1:Section({Name = 'Target Aim', Side = 'Left', Size = 240});
+local Section1 = Tab1:Section({Name = 'Section1', Side = 'Right', Size = 80});
+Tab3:PlayerList({Flag = 'CurrentPlayer'})
+
+Section:Toggle({
+    Name = 'Enabled',
+    Defualt = false,
+    Callback = function(Value)
+        
+    end
+})
+
+Section:Textbox({
+    Name = 'Prediction',
+    Default = '0',
+    Callback = function(Value)
+        
+    end
+})
+
+Section:Slider({
+    Name = 'Pred Adjustment',
+    Min = 0,
+    Max = 100,
+    Default = 54,
+    Suffix = '',
+    Decimals = 0.001,
+    Callback = function(Value)
+        
+    end
+})
+
+Section:List({
+    Name = 'Lock Method',
+    Options = {
+        "Index","Namecall" 
+    },
+    Default = 'Namecall',
+    Callback = function(Value)
+        
+    end
+})
+
+Section:Button({
+    Name = 'Load Lock',
+    Callback = function()
+        
+    end
+})
+
+Section:Button({
+    Name = 'Load Tool',
+    Callback = function()
+        
+    end
+})
+
+Section:Keybind({
+    Name = 'Lock Keybind',
+    Flag = 'Lock Keybind',
+    UseKey = true,
+    Default = Enum.KeyCode.End,
+    Callback = function(Value)
+        
+    end
+})
+
+Section1:Toggle({
+    Name = 'Highlight',
+    Defualt = false,
+    Callback = function(Value)
+        
+    end
+}):Colorpicker({
+    Default = Color3.fromRGB(255, 255, 255),
+    Callback = function(Value)
+        
+    end
+})
+
+Section1:Colorpicker({
+    Name = 'Sky Color',
+    Default = Color3.fromRGB(255, 255, 255),
+    Callback = function(Value)
+        
+    end
+})
+
+Section1:Toggle({
+    Name = 'Enabled',
+    Defualt = false,
+    Callback = function(Value)
+        
+    end
+}):Keybind({
+    Flag = 'Lock Keybind',
+    UseKey = true,
+    Default = Enum.KeyCode.End,
+    Callback = function(Value)
+        
+    end
+})
